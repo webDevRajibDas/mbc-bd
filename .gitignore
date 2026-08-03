@@ -1,0 +1,28 @@
+/node_modules
+/public/hot
+/public/storage
+/public/assets/achievement
+/public/assets/award
+
+/storage/*.key
+/public/profile_image
+/vendor
+
+# Signature uploads
+public/signature/*
+!public/signature/.gitkeep
+
+.idea
+.idea/workspace.xml
+.env
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+
+
+# .gitignore
+/storage/framework/views/*.php
+/bootstrap/cache/*.php

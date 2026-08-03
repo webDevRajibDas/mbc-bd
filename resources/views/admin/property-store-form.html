@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MBC Bangladesh | Store Property</title>
+
+<!-- Bootstrap v4.0.0 -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+  :root{
+    --mbc-navy:#0E2A47;
+    --mbc-navy-deep:#081C32;
+    --mbc-green:#1AA05C;
+    --mbc-red:#E32227;
+    --mbc-gold:#F0A500;
+    --mbc-ice:#F3F6FA;
+    --mbc-card:#FFFFFF;
+    --mbc-line:#E3E9F0;
+    --mbc-text:#16263B;
+    --mbc-muted:#6C7E93;
+    --radius-lg:20px;
+    --radius-md:12px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    background:var(--mbc-ice);
+    font-family:'Hind Siliguri','Poppins',sans-serif;
+    color:var(--mbc-text);
+    padding-bottom:60px;
+  }
+  .heading-font{font-family:'Poppins',sans-serif;}
+
+  /* Page header */
+  .page-header{
+    background:linear-gradient(135deg,var(--mbc-navy) 0%, var(--mbc-navy-deep) 100%);
+    padding:20px 24px;
+    display:flex;align-items:center;justify-content:space-between;
+    box-shadow:0 4px 18px rgba(8,28,50,.18);
+    margin-bottom:22px;
+  }
+  .page-header .title-block{display:flex;align-items:center;gap:14px;}
+  .page-header .icon-badge{
+    width:44px;height:44px;border-radius:12px;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+    display:flex;align-items:center;justify-content:center;color:var(--mbc-gold);font-size:18px;
+  }
+  .page-header h1{color:#fff;font-size:19px;font-weight:700;margin:0;font-family:'Poppins',sans-serif;}
+  .page-header p{color:#9FB4C9;font-size:12.5px;margin:0;}
+  .breadcrumb-mini{color:#B9C8D9;font-size:12px;}
+  .breadcrumb-mini a{color:#B9C8D9;text-decoration:none;}
+  .breadcrumb-mini a:hover{color:#fff;}
+
+  .container-wrap{max-width:980px;margin:0 auto;padding:0 16px;}
+
+  /* Card */
+  .form-card{
+    background:var(--mbc-card);
+    border:1px solid var(--mbc-line);
+    border-radius:var(--radius-lg);
+    box-shadow:0 8px 24px rgba(14,42,71,.06);
+    overflow:hidden;
+    margin-bottom:22px;
+  }
+  .section-head{
+    display:flex;align-items:center;gap:10px;
+    padding:16px 22px;
+    border-bottom:1px solid var(--mbc-line);
+    background:linear-gradient(90deg, rgba(26,160,92,.05), transparent);
+  }
+  .section-head .num{
+    width:28px;height:28px;border-radius:50%;
+    background:var(--mbc-green);color:#fff;font-weight:700;font-size:12.5px;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .section-head h5{margin:0;font-family:'Poppins',sans-serif;font-weight:700;font-size:15px;color:var(--mbc-text);}
+  .section-head span.sub{display:block;font-size:11.5px;color:var(--mbc-muted);font-weight:500;}
+  .section-body{padding:22px;}
+
+  label.field-label{
+    font-size:12.5px;font-weight:700;color:var(--mbc-text);
+    margin-bottom:6px;text-transform:uppercase;letter-spacing:.3px;
+  }
+  label.field-label .req{color:var(--mbc-red);}
+  label.field-label .hint{
+    display:block;text-transform:none;font-weight:500;color:var(--mbc-muted);letter-spacing:0;font-size:11.5px;margin-top:1px;
+  }
+
+  .form-control, .custom-select{
+    border:1.5px solid var(--mbc-line);
+    border-radius:10px;
+    padding:10px 14px;
+    height:auto;
+    font-size:14px;
+    color:var(--mbc-text);
+    background-color:#FBFCFE;
+  }
+  .form-control:focus, .custom-select:focus{
+    border-color:var(--mbc-green);
+    box-shadow:0 0 0 3px rgba(26,160,92,.12);
+    background-color:#fff;
+  }
+  textarea.form-control{resize:vertical;}
+
+  .input-icon-group{position:relative;}
+  .input-icon-group i{
+    position:absolute;left:14px;top:50%;transform:translateY(-50%);
+    color:var(--mbc-muted);font-size:13px;
+  }
+  .input-icon-group .form-control{padding-left:38px;}
+
+  .input-group-taka{
+    display:flex;align-items:stretch;
+  }
+  .input-group-taka .taka-prefix{
+    background:var(--mbc-navy);color:#fff;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    padding:0 14px;border-radius:10px 0 0 10px;font-size:14px;
+  }
+  .input-group-taka .form-control{border-radius:0 10px 10px 0;border-left:none;}
+
+  /* Upload zone */
+  .upload-zone{
+    border:2px dashed var(--mbc-line);
+    border-radius:var(--radius-md);
+    background:#FBFCFE;
+    padding:26px 16px;
+    text-align:center;
+    cursor:pointer;
+    transition:.2s;
+  }
+  .upload-zone:hover{border-color:var(--mbc-green);background:rgba(26,160,92,.03);}
+  .upload-zone i{font-size:26px;color:var(--mbc-green);margin-bottom:8px;}
+  .upload-zone .u-title{font-weight:700;font-size:13.5px;color:var(--mbc-text);}
+  .upload-zone .u-sub{font-size:11.5px;color:var(--mbc-muted);}
+
+  .thumb-strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;}
+  .thumb-strip .thumb{
+    width:64px;height:64px;border-radius:10px;background:#E9EEF3;
+    border:1px solid var(--mbc-line);display:flex;align-items:center;justify-content:center;
+    color:var(--mbc-muted);font-size:16px;position:relative;overflow:hidden;
+  }
+  .thumb-strip .thumb .rm{
+    position:absolute;top:2px;right:2px;width:16px;height:16px;background:var(--mbc-red);
+    color:#fff;border-radius:50%;font-size:9px;display:flex;align-items:center;justify-content:center;
+  }
+
+  /* Status toggle pills */
+  .status-pill-group{display:flex;gap:10px;flex-wrap:wrap;}
+  .status-pill-group input{display:none;}
+  .status-pill-group label{
+    border:1.5px solid var(--mbc-line);border-radius:30px;
+    padding:8px 18px;font-size:13px;font-weight:600;color:var(--mbc-muted);
+    cursor:pointer;transition:.2s;margin:0;
+  }
+  .status-pill-group input:checked + label{
+    background:var(--mbc-green);border-color:var(--mbc-green);color:#fff;
+  }
+
+  /* Installment builder row */
+  .installment-row{
+    display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;
+    background:#FBFCFE;border:1px solid var(--mbc-line);border-radius:10px;
+    padding:12px;margin-bottom:10px;
+  }
+  .installment-row .rm-row{
+    width:36px;height:36px;border-radius:8px;border:1px solid var(--mbc-line);
+    display:flex;align-items:center;justify-content:center;color:var(--mbc-red);background:#fff;
+  }
+  .add-installment-btn{
+    border:1.5px dashed var(--mbc-green);color:var(--mbc-green);background:rgba(26,160,92,.05);
+    border-radius:10px;padding:9px;width:100%;font-weight:700;font-size:13px;
+  }
+  .add-installment-btn:hover{background:rgba(26,160,92,.1);}
+
+  /* Sticky action bar */
+  .action-bar{
+    position:sticky;bottom:0;
+    background:#fff;border-top:1px solid var(--mbc-line);
+    padding:14px 22px;display:flex;align-items:center;justify-content:space-between;
+    border-radius:0 0 var(--radius-lg) var(--radius-lg);
+  }
+  .btn-mbc-primary{
+    background:linear-gradient(135deg,var(--mbc-green),#0EA968);
+    color:#fff;font-weight:700;border:none;border-radius:10px;
+    padding:11px 26px;font-size:14px;box-shadow:0 6px 16px rgba(26,160,92,.25);
+  }
+  .btn-mbc-primary:hover{color:#fff;filter:brightness(1.05);}
+  .btn-mbc-ghost{
+    background:#fff;border:1.5px solid var(--mbc-line);color:var(--mbc-muted);
+    font-weight:700;border-radius:10px;padding:11px 22px;font-size:14px;
+  }
+  .btn-mbc-ghost:hover{border-color:var(--mbc-red);color:var(--mbc-red);}
+  .btn-mbc-draft{
+    background:#fff;border:1.5px solid var(--mbc-navy);color:var(--mbc-navy);
+    font-weight:700;border-radius:10px;padding:11px 22px;font-size:14px;margin-right:8px;
+  }
+
+  .bn-badge{
+    display:inline-block;background:rgba(227,34,39,.08);color:var(--mbc-red);
+    font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:6px;margin-left:6px;
+  }
+
+  @media (max-width:576px){
+    .installment-row{grid-template-columns:1fr 1fr;}
+    .action-bar{flex-direction:column;gap:10px;align-items:stretch;}
+    .action-bar .right-actions{display:flex;justify-content:flex-end;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Page Header -->
+<div class="page-header">
+  <div class="title-block">
+    <div class="icon-badge"><i class="fas fa-map-marked-alt"></i></div>
+    <div>
+      <h1>Store Property <span class="bn-badge">নতুন জমি প্রকল্প</span></h1>
+      <p>Land Project &middot; Our Land, My Home</p>
+    </div>
+  </div>
+  <div class="breadcrumb-mini">
+    <a href="#">Dashboard</a> / <a href="#">Land Project</a> / <span class="text-white">Store</span>
+  </div>
+</div>
+
+<div class="container-wrap">
+<form id="propertyForm">
+
+  <!-- Section 1: Basic Info -->
+  <div class="form-card">
+    <div class="section-head">
+      <div class="num">1</div>
+      <div>
+        <h5>Basic Information</h5>
+        <span class="sub">Project identity and category</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="field-label">Project Title (English) <span class="req">*</span></label>
+          <input type="text" class="form-control" placeholder="e.g. Our Land, My Home" value="Our Land, My Home" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="field-label">প্রকল্পের শিরোনাম (বাংলা) <span class="req">*</span>
+            <span class="hint">Bengali display title</span>
+          </label>
+          <input type="text" class="form-control" placeholder="আমাদের জমি-আমার ঘর" value="আমাদের জমি-আমার ঘর" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label class="field-label">Category <span class="req">*</span></label>
+          <select class="custom-select" required>
+            <option selected>Land Project</option>
+            <option>Our Flat</option>
+            <option>Hotel &amp; Restaurant</option>
+            <option>Father Shop</option>
+            <option>Investment</option>
+          </select>
+        </div>
+        <div class="form-group col-md-4">
+          <label class="field-label">Community Type</label>
+          <input type="text" class="form-control" placeholder="e.g. Multipal Business Community" value="Multipal Business Community">
+        </div>
+        <div class="form-group col-md-4">
+          <label class="field-label">Reference Code</label>
+          <div class="input-icon-group">
+            <i class="fas fa-hashtag"></i>
+            <input type="text" class="form-control" placeholder="MBC-LAND-001">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="field-label">Short Description <span class="hint">Shown on listing cards</span></label>
+        <textarea class="form-control" rows="2" placeholder="Brief summary of the project...">A planned township beside the Dhaka-Mawa expressway near Kuchiamora, offering members affordable land and flat ownership opportunities.</textarea>
+      </div>
+
+      <div class="form-group mb-0">
+        <label class="field-label">পূর্ণ বিবরণ (Bengali Description)</label>
+        <textarea class="form-control" rows="4" placeholder="এই প্রকল্পের আওতায়...">এই প্রকল্পের আওতায় ঢাকা-মাওয়া এক্সপ্রেসওয়ের পাশে কুচিয়ামোড়ায় যাহা কেরাইন ইউনিয়ন, উপজেলা-সিরাজদিখান, জেলা-মুন্সিগঞ্জ-এ অবস্থিত মাল্টিপল বিজনেস কমিউনিটির সদস্যদের জন্য নাগরিক সকল সুযোগ সুবিধা সম্বলিত আধুনিক শহর তৈরী করা হবে।</textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: Location -->
+  <div class="form-card">
+    <div class="section-head">
+      <div class="num">2</div>
+      <div>
+        <h5>Location Details</h5>
+        <span class="sub">Bangladesh administrative hierarchy</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label class="field-label">Division <span class="req">*</span></label>
+          <select class="custom-select" required>
+            <option selected>Dhaka</option>
+            <option>Chattogram</option>
+            <option>Khulna</option>
+            <option>Rajshahi</option>
+          </select>
+        </div>
+        <div class="form-group col-md-3">
+          <label class="field-label">District <span class="req">*</span></label>
+          <select class="custom-select" required>
+            <option selected>Munshiganj</option>
+            <option>Dhaka</option>
+            <option>Narayanganj</option>
+          </select>
+        </div>
+        <div class="form-group col-md-3">
+          <label class="field-label">Upazila / Thana <span class="req">*</span></label>
+          <select class="custom-select" required>
+            <option selected>Sirajdikhan</option>
+            <option>Munshiganj Sadar</option>
+            <option>Tongibari</option>
+          </select>
+        </div>
+        <div class="form-group col-md-3">
+          <label class="field-label">Union / Mouza</label>
+          <select class="custom-select">
+            <option selected>Keraini</option>
+            <option>Baligaon</option>
+            <option>Rajanagar</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group mb-0">
+        <label class="field-label">Landmark / Nearby Point <span class="hint">e.g. Expressway, junction, notable location</span></label>
+        <div class="input-icon-group">
+          <i class="fas fa-map-pin"></i>
+          <input type="text" class="form-control" placeholder="Beside Dhaka-Mawa Expressway, Kuchiamora" value="Beside Dhaka-Mawa Expressway, Kuchiamora">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Plot & Pricing -->
+  <div class="form-card">
+    <div class="section-head">
+      <div class="num">3</div>
+      <div>
+        <h5>Plot &amp; Pricing</h5>
+        <span class="sub">Sizing, booking money, and installment plan</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label class="field-label">Minimum Plot Size <span class="req">*</span></label>
+          <div class="input-icon-group">
+            <i class="fas fa-vector-square"></i>
+            <input type="number" class="form-control" placeholder="1" value="1">
+          </div>
+        </div>
+        <div class="form-group col-md-3">
+          <label class="field-label">Unit</label>
+          <select class="custom-select">
+            <option selected>Katha</option>
+            <option>Decimal</option>
+            <option>Bigha</option>
+            <option>Sq. ft</option>
+          </select>
+        </div>
+        <div class="form-group col-md-3">
+          <label class="field-label">Total Plots Available</label>
+          <input type="number" class="form-control" placeholder="e.g. 250">
+        </div>
+        <div class="form-group col-md-3">
+          <label class="field-label">Members Target</label>
+          <input type="number" class="form-control" placeholder="1554" value="1554">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label class="field-label">Booking Money <span class="req">*</span></label>
+          <div class="input-group-taka">
+            <span class="taka-prefix">৳</span>
+            <input type="number" class="form-control" placeholder="20000" value="20000" required>
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label class="field-label">Installment Duration</label>
+          <div class="input-icon-group">
+            <i class="fas fa-calendar-alt"></i>
+            <input type="number" class="form-control" placeholder="144" value="144">
+          </div>
+        </div>
+        <div class="form-group col-md-4">
+          <label class="field-label">Duration Unit</label>
+          <select class="custom-select">
+            <option selected>Months</option>
+            <option>Years</option>
+          </select>
+        </div>
+      </div>
+
+      <label class="field-label d-block mt-2">Installment Plan Breakdown <span class="hint">Optional — define custom milestone payments</span></label>
+      <div id="installmentWrap">
+        <div class="installment-row">
+          <div>
+            <label class="field-label" style="font-size:10.5px;">Milestone</label>
+            <input type="text" class="form-control" placeholder="Down Payment">
+          </div>
+          <div>
+            <label class="field-label" style="font-size:10.5px;">Amount (৳)</label>
+            <input type="number" class="form-control" placeholder="20000">
+          </div>
+          <div>
+            <label class="field-label" style="font-size:10.5px;">Due In (months)</label>
+            <input type="number" class="form-control" placeholder="0">
+          </div>
+          <button type="button" class="rm-row"><i class="fas fa-times"></i></button>
+        </div>
+      </div>
+      <button type="button" class="add-installment-btn" onclick="addInstallmentRow()"><i class="fas fa-plus mr-1"></i> Add Installment Milestone</button>
+    </div>
+  </div>
+
+  <!-- Section 4: Career/Officer Track (from source content) -->
+  <div class="form-card">
+    <div class="section-head">
+      <div class="num">4</div>
+      <div>
+        <h5>Marketing Officer Track</h5>
+        <span class="sub">Designation ladder tied to this project</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="field-label">Entry Designation</label>
+          <input type="text" class="form-control" value="Sales Officer (SO)">
+        </div>
+        <div class="form-group col-md-6">
+          <label class="field-label">Top Designation</label>
+          <input type="text" class="form-control" value="Executive Director (ED)">
+        </div>
+      </div>
+      <div class="form-group mb-0">
+        <label class="field-label">Promotion Path <span class="hint">Comma separated career grades</span></label>
+        <input type="text" class="form-control" value="SO, ME, AGM, GM, ED">
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: Media -->
+  <div class="form-card">
+    <div class="section-head">
+      <div class="num">5</div>
+      <div>
+        <h5>Media &amp; Documents</h5>
+        <span class="sub">Feature image, gallery, and layout map</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="field-label">Feature Image <span class="req">*</span></label>
+          <div class="upload-zone" onclick="document.getElementById('featureImg').click()">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <div class="u-title">Click to upload feature image</div>
+            <div class="u-sub">PNG, JPG up to 4MB · Recommended 1200×675</div>
+            <input type="file" id="featureImg" accept="image/*" style="display:none;">
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label class="field-label">Gallery Images <span class="hint">Multiple files allowed</span></label>
+          <div class="upload-zone" onclick="document.getElementById('galleryImgs').click()">
+            <i class="fas fa-images"></i>
+            <div class="u-title">Click to upload gallery photos</div>
+            <div class="u-sub">Site photos, layout plan, mouza map</div>
+            <input type="file" id="galleryImgs" accept="image/*" multiple style="display:none;">
+          </div>
+          <div class="thumb-strip">
+            <div class="thumb"><i class="fas fa-image"></i><span class="rm"><i class="fas fa-times"></i></span></div>
+            <div class="thumb"><i class="fas fa-image"></i><span class="rm"><i class="fas fa-times"></i></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 6: Publish Status -->
+  <div class="form-card">
+    <div class="section-head">
+      <div class="num">6</div>
+      <div>
+        <h5>Publish Settings</h5>
+        <span class="sub">Visibility and availability</span>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label class="field-label d-block">Status</label>
+          <div class="status-pill-group">
+            <input type="radio" name="status" id="st-active" checked>
+            <label for="st-active"><i class="fas fa-check-circle mr-1"></i>Active</label>
+            <input type="radio" name="status" id="st-upcoming">
+            <label for="st-upcoming"><i class="fas fa-hourglass-half mr-1"></i>Upcoming</label>
+            <input type="radio" name="status" id="st-sold">
+            <label for="st-sold"><i class="fas fa-ban mr-1"></i>Sold Out</label>
+            <input type="radio" name="status" id="st-draft">
+            <label for="st-draft"><i class="fas fa-file mr-1"></i>Draft</label>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <div class="custom-control custom-checkbox mt-4 pt-2">
+            <input type="checkbox" class="custom-control-input" id="featuredCheck" checked>
+            <label class="custom-control-label" for="featuredCheck">Mark as featured project</label>
+          </div>
+          <div class="custom-control custom-checkbox mt-2">
+            <input type="checkbox" class="custom-control-input" id="mbcOnlyCheck" checked>
+            <label class="custom-control-label" for="mbcOnlyCheck">MBC members only offer</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-bar">
+      <button type="button" class="btn-mbc-ghost"><i class="fas fa-times mr-1"></i> Cancel</button>
+      <div class="right-actions">
+        <button type="button" class="btn-mbc-draft"><i class="far fa-save mr-1"></i> Save as Draft</button>
+        <button type="submit" class="btn-mbc-primary"><i class="fas fa-check mr-1"></i> Store Property</button>
+      </div>
+    </div>
+  </div>
+
+</form>
+</div>
+
+<script>
+  function addInstallmentRow(){
+    var wrap = document.getElementById('installmentWrap');
+    var row = document.createElement('div');
+    row.className = 'installment-row';
+    row.innerHTML = `
+      <div>
+        <label class="field-label" style="font-size:10.5px;">Milestone</label>
+        <input type="text" class="form-control" placeholder="e.g. 6th Month">
+      </div>
+      <div>
+        <label class="field-label" style="font-size:10.5px;">Amount (৳)</label>
+        <input type="number" class="form-control" placeholder="0">
+      </div>
+      <div>
+        <label class="field-label" style="font-size:10.5px;">Due In (months)</label>
+        <input type="number" class="form-control" placeholder="0">
+      </div>
+      <button type="button" class="rm-row" onclick="this.closest('.installment-row').remove()"><i class="fas fa-times"></i></button>
+    `;
+    wrap.appendChild(row);
+  }
+
+  document.getElementById('propertyForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    alert('Preview only — connect this form action to your Laravel store() route.');
+  });
+</script>
+
+</body>
+</html>

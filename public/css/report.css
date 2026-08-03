@@ -1,0 +1,34 @@
+.report-card { border-radius: 10px; overflow: hidden; }
+.report-card .card-header{ border-radius: 10px 10px 0 0 !important; padding: 14px 18px !important; }
+.bg-teal { background-color: #00897b !important; color: white; }
+.report-card .card-body{
+    background-color: #00897b !important;
+    color: #fff !important;
+}
+.report-card .form-control { border-radius: 8px; }
+.report-card .select2-container--default .select2-selection--single,
+.report-card .select2-container--default .select2-selection--multiple {
+    border-radius: 8px !important;
+    border: 1px solid #ced4da;
+}
+.report-card .btn { border-radius: 8px; }
+.btn-teal {
+    background-color: #ffffff;
+    padding: 6px 12px;
+    color: #00897b;
+    font-weight: bold;
+}
+.btn-teal:hover {
+    background-color: #00897b;
+    border-color: #fff;
+}
+.filterRstBtn{
+    border-color: #fff;
+    background-color: #00897b;
+    padding: 6px 12px !important;   
+    transition: 0.1s all;
+}
+.filterRstBtn:hover{
+    background-color: #fff !important;
+    color: #000 !important;
+}

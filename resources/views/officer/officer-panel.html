@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MBC Bangladesh | Officer Panel</title>
+
+<!-- Bootstrap v4.0.0 -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+  :root{
+    --mbc-navy:#0E2A47;
+    --mbc-navy-deep:#081C32;
+    --mbc-green:#1AA05C;
+    --mbc-red:#E32227;
+    --mbc-gold:#F0A500;
+    --mbc-ice:#F3F6FA;
+    --mbc-card:#FFFFFF;
+    --mbc-line:#E3E9F0;
+    --mbc-text:#16263B;
+    --mbc-muted:#6C7E93;
+    --radius-lg:20px;
+    --radius-md:14px;
+  }
+
+  *{box-sizing:border-box;}
+
+  body{
+    background:var(--mbc-ice);
+    font-family:'Hind Siliguri','Poppins',sans-serif;
+    color:var(--mbc-text);
+    min-height:100vh;
+  }
+
+  .heading-font{font-family:'Poppins',sans-serif;}
+
+  /* ===== Top App Bar ===== */
+  .topbar{
+    background:linear-gradient(135deg,var(--mbc-navy) 0%, var(--mbc-navy-deep) 100%);
+    padding:14px 22px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+    box-shadow:0 4px 18px rgba(8,28,50,.18);
+  }
+  .topbar .back-btn{
+    width:38px;height:38px;border-radius:50%;
+    background:rgba(255,255,255,.08);
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;border:1px solid rgba(255,255,255,.15);
+    transition:.2s;
+  }
+  .topbar .back-btn:hover{background:rgba(255,255,255,.18);color:#fff;}
+
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand-logo{
+    width:46px;height:46px;border-radius:50%;
+    background:#fff;display:flex;align-items:center;justify-content:center;
+    font-weight:800;color:var(--mbc-green);border:3px solid var(--mbc-green);
+    font-size:15px;font-family:'Poppins',sans-serif;
+  }
+  .brand-name{color:#fff;line-height:1.15;}
+  .brand-name .b1{font-weight:800;font-size:17px;letter-spacing:.3px;}
+  .brand-name .b1 span{color:var(--mbc-red);}
+  .brand-name .b2{font-size:11px;color:#B9C8D9;font-weight:500;}
+
+  .topbar-right{display:flex;align-items:center;gap:14px;}
+  .icon-btn{
+    width:38px;height:38px;border-radius:50%;
+    background:rgba(255,255,255,.08);
+    display:flex;align-items:center;justify-content:center;
+    color:#EAF1F8;position:relative;border:1px solid rgba(255,255,255,.12);
+    transition:.2s;
+  }
+  .icon-btn:hover{background:rgba(255,255,255,.2);color:#fff;}
+  .icon-btn .dot{
+    position:absolute;top:-3px;right:-3px;width:9px;height:9px;border-radius:50%;
+    background:var(--mbc-gold);border:2px solid var(--mbc-navy-deep);
+  }
+
+  /* ===== Officer Identity Strip ===== */
+  .id-strip{
+    background:var(--mbc-card);
+    margin:16px 16px 0;
+    border-radius:var(--radius-lg);
+    padding:18px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    box-shadow:0 8px 24px rgba(14,42,71,.06);
+    border:1px solid var(--mbc-line);
+  }
+  .avatar-wrap{position:relative;flex-shrink:0;}
+  .avatar-wrap img{
+    width:74px;height:74px;border-radius:50%;object-fit:cover;
+    border:3px solid var(--mbc-green);
+  }
+  .avatar-wrap .badge-online{
+    position:absolute;bottom:2px;right:2px;width:16px;height:16px;
+    background:var(--mbc-green);border:2.5px solid #fff;border-radius:50%;
+  }
+  .id-info{flex-grow:1;min-width:0;}
+  .id-info .name{font-family:'Poppins',sans-serif;font-weight:700;font-size:18px;margin:0;color:var(--mbc-text);}
+  .id-info .role-pill{
+    display:inline-block;margin-top:5px;
+    background:rgba(26,160,92,.1);color:var(--mbc-green);
+    font-size:12px;font-weight:700;padding:3px 12px;border-radius:20px;
+    letter-spacing:.4px;
+  }
+
+  /* ===== Stat Pills (Shopping Point / Balance / Deposit / Profit) ===== */
+  .stats-row{
+    margin:14px 16px 0;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+  }
+  .stat-pill{
+    background:var(--mbc-card);
+    border-radius:var(--radius-md);
+    padding:12px 10px;
+    text-align:center;
+    border:1px solid var(--mbc-line);
+    box-shadow:0 4px 14px rgba(14,42,71,.05);
+    transition:.2s;
+  }
+  .stat-pill:hover{transform:translateY(-3px);box-shadow:0 10px 22px rgba(14,42,71,.1);}
+  .stat-pill .stat-icon{
+    width:34px;height:34px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    margin:0 auto 6px;font-size:14px;color:#fff;
+  }
+  .stat-pill .stat-label{font-size:10.5px;color:var(--mbc-muted);font-weight:600;text-transform:uppercase;letter-spacing:.3px;}
+  .stat-pill .stat-value{font-family:'Poppins',sans-serif;font-weight:700;font-size:14px;margin-top:2px;color:var(--mbc-text);}
+  .icon-shop{background:linear-gradient(135deg,#F2A6B8,#E85D8C);}
+  .icon-balance{background:linear-gradient(135deg,#F6D365,#F0A500);}
+  .icon-deposit{background:linear-gradient(135deg,#6FC3F7,#2E8FE0);}
+  .icon-profit{background:linear-gradient(135deg,#FFB27A,#E36414);}
+
+  /* ===== Utility Nav ===== */
+  .util-nav{
+    margin:14px 16px 0;
+    background:var(--mbc-card);
+    border-radius:var(--radius-md);
+    border:1px solid var(--mbc-line);
+    padding:10px 14px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    box-shadow:0 4px 14px rgba(14,42,71,.05);
+  }
+  .util-link{
+    display:flex;align-items:center;gap:7px;
+    color:var(--mbc-text);font-weight:600;font-size:13.5px;
+    text-decoration:none;
+  }
+  .util-link i{color:var(--mbc-navy);font-size:15px;}
+  .util-link:hover{color:var(--mbc-green);text-decoration:none;}
+  .util-icons{display:flex;gap:10px;}
+  .util-icons a{
+    width:34px;height:34px;border-radius:9px;
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-size:14px;
+  }
+  .u-video{background:var(--mbc-red);}
+  .u-fb{background:#3B5998;}
+  .u-chat{background:var(--mbc-navy);position:relative;}
+  .u-chat .chat-dot{position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:var(--mbc-gold);border-radius:50%;border:2px solid #fff;}
+
+  /* ===== Main Panel ===== */
+  .main-panel{
+    margin:14px 16px 90px;
+    background:linear-gradient(160deg,var(--mbc-navy) 0%, var(--mbc-navy-deep) 100%);
+    border-radius:26px;
+    padding:22px 16px 18px;
+    position:relative;
+    box-shadow:0 14px 34px rgba(8,28,50,.25);
+  }
+  .panel-title{
+    color:#9FB4C9;font-size:11px;font-weight:700;
+    letter-spacing:1.5px;text-transform:uppercase;
+    margin-bottom:12px;padding-left:4px;
+  }
+
+  .menu-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    padding-right:46px;
+  }
+  .menu-item{
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:var(--radius-md);
+    padding:16px 8px 12px;
+    text-align:center;
+    color:#EAF1F8;
+    text-decoration:none;
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    transition:.2s;
+  }
+  .menu-item:hover{
+    background:rgba(255,255,255,.13);
+    transform:translateY(-3px);
+    color:#fff;text-decoration:none;
+  }
+  .menu-item .m-icon{
+    width:42px;height:42px;border-radius:12px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:17px;color:#fff;
+  }
+  .menu-item .m-label{font-size:12px;font-weight:700;line-height:1.25;}
+  .menu-item.wide{grid-column:span 1;}
+
+  .mi-land{background:linear-gradient(135deg,#4FACFE,#2E8FE0);}
+  .mi-flat{background:linear-gradient(135deg,#43E695,#1AA05C);}
+  .mi-shop{background:linear-gradient(135deg,#FA709A,#E32227);}
+  .mi-hotel{background:linear-gradient(135deg,#F6D365,#F0A500);}
+  .mi-fshop{background:linear-gradient(135deg,#A78BFA,#7C3AED);}
+  .mi-invest{background:linear-gradient(135deg,#FFB27A,#E36414);}
+  .mi-merchant{background:linear-gradient(135deg,#6FC3F7,#2E8FE0);}
+  .mi-agent{background:linear-gradient(135deg,#F6A6C1,#E85D8C);}
+  .mi-reg{background:linear-gradient(135deg,#43E695,#0EA968);}
+  .mi-points{background:linear-gradient(135deg,#8EC5FC,#4361EE);}
+  .mi-packages{background:linear-gradient(135deg,#FDCB82,#F0A500);}
+
+  /* ===== Rail of quick shortcut buttons ===== */
+  .quick-rail{
+    position:absolute;
+    right:14px;top:60px;
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .quick-rail a{
+    width:34px;height:34px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-size:12px;
+    box-shadow:0 4px 10px rgba(0,0,0,.25);
+    transition:.2s;
+  }
+  .quick-rail a:hover{transform:scale(1.12);color:#fff;}
+  .q1{background:#1AA05C;}
+  .q2{background:#E85D8C;}
+  .q3{background:#F0A500;}
+  .q4{background:#6D4AFF;}
+  .q5{background:#3A4A5C;}
+
+  /* ===== Footer bar ===== */
+  .panel-footer{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-top:18px;padding-top:14px;
+    border-top:1px solid rgba(255,255,255,.1);
+    padding-right:46px;
+  }
+  .footer-tabs a{
+    color:#B9C8D9;font-weight:700;font-size:12.5px;text-decoration:none;margin-right:16px;
+  }
+  .footer-tabs a.active-tab{color:#43E695;}
+  .footer-tabs a:hover{color:#fff;text-decoration:none;}
+  .logout-link{
+    color:#F2A6B8;font-weight:700;font-size:12.5px;text-decoration:none;
+    display:flex;align-items:center;gap:6px;
+  }
+  .logout-link:hover{color:#fff;text-decoration:none;}
+
+  @media (max-width:420px){
+    .stats-row{grid-template-columns:repeat(2,1fr);}
+    .menu-grid{grid-template-columns:repeat(2,1fr);padding-right:40px;}
+    .quick-rail{right:8px;top:56px;}
+    .quick-rail a{width:28px;height:28px;font-size:10px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- Top App Bar -->
+<div class="topbar">
+  <div class="d-flex align-items-center" style="gap:12px;">
+    <a href="#" class="back-btn"><i class="fas fa-arrow-left"></i></a>
+    <div class="brand">
+      <div class="brand-logo">MB</div>
+      <div class="brand-name">
+        <div class="b1">MBC<span> Bangladesh</span></div>
+        <div class="b2">Multiple Business Community</div>
+      </div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <a href="#" class="icon-btn"><i class="fas fa-bell"></i><span class="dot"></span></a>
+    <a href="#" class="icon-btn"><i class="fas fa-cog"></i></a>
+  </div>
+</div>
+
+<!-- Officer Identity -->
+<div class="id-strip">
+  <div class="avatar-wrap">
+    <img src="https://i.pravatar.cc/150?img=13" alt="Officer photo">
+    <span class="badge-online"></span>
+  </div>
+  <div class="id-info">
+    <p class="name">Md. Abdul Majid</p>
+    <span class="role-pill">GENERAL MANAGER · OFFICER</span>
+  </div>
+  <a href="#" class="icon-btn" style="background:var(--mbc-ice);color:var(--mbc-navy);border-color:var(--mbc-line);"><i class="fas fa-user"></i></a>
+</div>
+
+<!-- Stat Pills -->
+<div class="stats-row">
+  <div class="stat-pill">
+    <div class="stat-icon icon-shop"><i class="fas fa-shopping-bag"></i></div>
+    <div class="stat-label">Shopping Pt.</div>
+    <div class="stat-value">1,240</div>
+  </div>
+  <div class="stat-pill">
+    <div class="stat-icon icon-balance"><i class="fas fa-wallet"></i></div>
+    <div class="stat-label">Balance</div>
+    <div class="stat-value">৳ 42,500</div>
+  </div>
+  <div class="stat-pill">
+    <div class="stat-icon icon-deposit"><i class="fas fa-hand-holding-usd"></i></div>
+    <div class="stat-label">Deposit</div>
+    <div class="stat-value">৳ 18,000</div>
+  </div>
+  <div class="stat-pill">
+    <div class="stat-icon icon-profit"><i class="fas fa-chart-line"></i></div>
+    <div class="stat-label">Profit</div>
+    <div class="stat-value">৳ 6,320</div>
+  </div>
+</div>
+
+<!-- Utility nav -->
+<div class="util-nav">
+  <div class="d-flex" style="gap:20px;">
+    <a href="#" class="util-link"><i class="fas fa-info-circle"></i> About Us</a>
+    <a href="#" class="util-link"><i class="fas fa-id-badge"></i> Profile</a>
+  </div>
+  <div class="util-icons">
+    <a href="#" class="u-video"><i class="fas fa-play"></i></a>
+    <a href="#" class="u-fb"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" class="u-chat"><i class="fas fa-comments"></i><span class="chat-dot"></span></a>
+  </div>
+</div>
+
+<!-- Main Menu Panel -->
+<div class="main-panel">
+  <div class="quick-rail">
+    <a href="#" class="q1"><i class="fas fa-play"></i></a>
+    <a href="#" class="q2"><i class="fas fa-play"></i></a>
+    <a href="#" class="q3"><i class="fas fa-play"></i></a>
+    <a href="#" class="q4"><i class="fas fa-play"></i></a>
+    <a href="#" class="q5"><i class="fas fa-play"></i></a>
+  </div>
+
+  <div class="panel-title">Business Services</div>
+  <div class="menu-grid">
+    <a href="#" class="menu-item"><div class="m-icon mi-land"><i class="fas fa-map-marked-alt"></i></div><span class="m-label">Land Project</span></a>
+    <a href="#" class="menu-item"><div class="m-icon mi-flat"><i class="fas fa-building"></i></div><span class="m-label">Our Flat</span></a>
+    <a href="#" class="menu-item"><div class="m-icon mi-shop"><i class="fas fa-store"></i></div><span class="m-label">E-Shop</span></a>
+    <a href="#" class="menu-item"><div class="m-icon mi-hotel"><i class="fas fa-hotel"></i></div><span class="m-label">Hotel &amp; Restaurant</span></a>
+    <a href="#" class="menu-item"><div class="m-icon mi-fshop"><i class="fas fa-warehouse"></i></div><span class="m-label">Father Shop</span></a>
+    <a href="#" class="menu-item"><div class="m-icon mi-invest"><i class="fas fa-coins"></i></div><span class="m-label">Investment</span></a>
+    <a href="#" class="menu-item"><div class="m-icon mi-merchant"><i class="fas fa-cash-register"></i></div><span class="m-label">Merchant</span></a>
+    <a href="#" class="menu-item"><div class="m-icon mi-agent"><i class="fas fa-user-tie"></i></div><span class="m-label">Agent</span></a>
+    <a href="#" class="menu-item"><div class="m-icon mi-reg"><i class="fas fa-user-plus"></i></div><span class="m-label">Registration</span></a>
+    <a href="#" class="menu-item"><div class="m-icon mi-points"><i class="fas fa-gem"></i></div><span class="m-label">Point Store</span></a>
+    <a href="#" class="menu-item"><div class="m-icon mi-packages"><i class="fas fa-box-open"></i></div><span class="m-label">Packages</span></a>
+  </div>
+
+  <div class="panel-footer">
+    <div class="footer-tabs">
+      <a href="#" class="active-tab">New</a>
+      <a href="#">Adjusting</a>
+    </div>
+    <a href="#" class="logout-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
+</div>
+
+</body>
+</html>

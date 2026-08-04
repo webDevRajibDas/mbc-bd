@@ -65,7 +65,6 @@
                     <div class="links">
                         <strong class="quick-title">{{ __('Quick Links') }}</strong>
                         <a href="{{ app('router')->has('home') ? route('home') : url('/') }}">{{ __('Dashboard') }}</a>
-                        <a href="{{ url('/') }}">{{ config('app.name', __('Home')) }}</a>
                     </div>
                 </div>
             </div>

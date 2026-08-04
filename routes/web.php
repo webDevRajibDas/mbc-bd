@@ -7,14 +7,14 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Officer\OfficerDashboardController;
 
 
-Route::get('/clear-cache', function () {
+Route::post('/clear-cache', function () {
     Artisan::call('config:clear');
     Artisan::call('cache:clear');
     Artisan::call('config:cache');
     Artisan::call('view:clear');
-    dd('done');
-   return back();
-});
+
+    return back()->with('success', 'Application cache cleared.');
+})->middleware(['auth', 'role:Master Admin|Super Admin', 'throttle:2,1'])->name('maintenance.clear-cache');
 
 Route::get('/', function () {
     return redirect()->route('login');

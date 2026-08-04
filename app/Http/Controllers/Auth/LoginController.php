@@ -19,7 +19,34 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        return view('auth.login');
+        return response()
+            ->view('auth.login')
+            ->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+            ->header('Pragma', 'no-cache');
+    }
+
+    /**
+     * Only active accounts may create an authenticated session.
+     */
+    protected function credentials(Request $request)
+    {
+        return array_merge(
+            $request->only($this->username(), 'password'),
+            ['status' => 'active']
+        );
+    }
+
+    /**
+     * Limit repeated password guesses per email address and IP address.
+     */
+    protected function maxAttempts()
+    {
+        return 5;
+    }
+
+    protected function decayMinutes()
+    {
+        return 15;
     }
 
     protected function authenticated(Request $request, $user)

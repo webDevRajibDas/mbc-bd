@@ -123,18 +123,18 @@
 
   .notish{
     grid-column: 1 / -1;
-    display:grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    display:flex;
+    flex-direction:column;
     gap:8px;
     text-align:left;
   }
   .notish-title{
-    grid-column: 1 / -1;
     font-size:20px;
     font-weight:800;
     color:#fff;
     margin:0;
   }
+  .point-actions{display:grid;grid-template-columns:1fr;gap:7px;}
   .pill-row{
     display:flex; align-items:center; justify-content:space-between; gap:8px; margin:0;
     min-width:0;
@@ -154,7 +154,12 @@
   .dot.yellow{ background:#f2d43c; }
   .dot.blue{ background:#4aa8e0; }
   .dot.orange{ background:#e88a2e; }
-  .officer-label{ grid-column:1 / -1; font-size:14px; font-weight:700; color:#e5e7eb; margin-top:2px; }
+  .letter-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;margin-top:3px;}
+  .letter-button{display:flex;align-items:center;justify-content:center;gap:5px;min-height:33px;border:1px solid rgba(255,255,255,.45);border-radius:4px;background:#edf3f8;color:#17375d;font:800 16px/1 'Hind Siliguri',sans-serif;cursor:pointer;}
+  .letter-button span{font-size:13px;line-height:1;}
+  .letter-button:hover,.letter-button.active{background:#09a963;color:#fff;}
+  .letter-button:nth-child(2):hover{background:#149bce}.letter-button:nth-child(3):hover{background:#1875b5}.letter-button:nth-child(4):hover{background:#d49292}.letter-button:nth-child(5):hover{background:#ecbf7b}
+  .officer-label{font-size:14px; font-weight:700; color:#e5e7eb; margin-top:2px; }
 
   .nav-card{
     background: linear-gradient(180deg, #2f8fd6, #1f6fb8);
@@ -1060,7 +1065,7 @@
   .notish{gap:8px;margin-top:5px;}
   .notish-title{font-size:20px;}
   .pill-row{gap:8px;}
-  .pill{min-height:50px;padding:5px 8px;border-radius:16px;display:flex;align-items:center;justify-content:center;line-height:1.25;}
+  .pill{min-height:38px;padding:5px 12px;border-radius:16px;display:flex;align-items:center;justify-content:center;line-height:1.25;}
   .dot{width:20px;height:20px;}
   .officer-label{color:#fff;font-size:14px;margin-top:2px;}
   .nav-card{
@@ -1082,7 +1087,6 @@
     .officer-panel{padding:8px;}
     .header-card{grid-template-columns:105px minmax(0,1fr);}
     .brand-name{font-size:20px;}
-    .notish{grid-template-columns:repeat(2,minmax(0,1fr));}
     .nav-card{padding:14px;}
     .nav-top{gap:9px;}
     .menu-grid{gap:9px;}
@@ -1138,15 +1142,18 @@
   .officer-dashboard-only .nav-card,
   .officer-dashboard-only .sub-panels,
   .officer-dashboard-only .right-col > .workspace-section:not(#ws-fatherland){display:none !important;}
-  .officer-dashboard-only .header-card{min-height:380px;grid-template-columns:1fr;justify-items:center;text-align:center;}
+  .officer-dashboard-only .header-card{min-height:0;grid-template-columns:120px minmax(0,1fr);justify-items:stretch;text-align:left;}
   .officer-dashboard-only .back-arrow{display:none;}
-  .officer-dashboard-only .brand-block{grid-column:1;padding-top:7px;}
-  .officer-dashboard-only .brand-title{grid-column:1;padding-top:0;}
+  .officer-dashboard-only .brand-title{grid-column:1 / -1;grid-row:1;padding-top:0;text-align:center;}
   .officer-dashboard-only .brand-logo-row{justify-content:center;}
-  .officer-dashboard-only .notish{grid-column:1;width:100%;grid-template-columns:repeat(2,minmax(0,1fr));}
-  .officer-dashboard-only .notish-title,.officer-dashboard-only .officer-label{grid-column:1 / -1;text-align:left;}
-  .officer-dashboard-only .pill{min-height:44px;}
-  @media(max-width:950px){.officer-dashboard-only .officer-app{grid-template-columns:1fr;}.officer-dashboard-only .header-card{min-height:0;}.officer-dashboard-only .brand-block{padding-top:0;}}
+  .officer-dashboard-only .brand-block{grid-column:1;grid-row:2;padding-top:10px;align-self:start;}
+  .officer-dashboard-only .notish{grid-column:2;grid-row:2;width:100%;margin-top:10px;}
+  .officer-dashboard-only .notish-title,.officer-dashboard-only .officer-label{text-align:left;}
+  .officer-dashboard-only .pill{min-height:38px;}
+  .officer-dashboard-only .letter-row{grid-column:1 / -1;grid-row:3;margin-top:7px;}
+  .officer-dashboard-only .officer-label{grid-column:1 / -1;grid-row:4;margin-top:3px;}
+  @media(max-width:950px){.officer-dashboard-only .officer-app{grid-template-columns:1fr;}.officer-dashboard-only .brand-block{padding-top:10px;}}
+  @media(max-width:380px){.officer-dashboard-only .header-card{grid-template-columns:1fr;}.officer-dashboard-only .brand-block,.officer-dashboard-only .notish,.officer-dashboard-only .letter-row,.officer-dashboard-only .officer-label{grid-column:1;}.officer-dashboard-only .brand-block{grid-row:2;justify-self:center;}.officer-dashboard-only .notish{grid-row:3;}.officer-dashboard-only .letter-row{grid-row:4;}.officer-dashboard-only .officer-label{grid-row:5;}}
   @endif
 </style>
 @endpush
@@ -1193,17 +1200,25 @@
           </div>
         </div>
         <div class="brand-sub">Multiple Business Community</div>
-        <div class="brand-tag">Better Life Solutions</div>
       </div>
 
       <div class="notish">
         <div class="notish-title">Notice</div>
-        <div class="pill-row menu-trigger" data-ws="ws-point-store" data-menu="point-store"><span class="pill">Shopping Point: {{ number_format($stats['shopping_points']) }}</span><span class="dot pink"></span></div>
-        <div class="pill-row menu-trigger" data-ws="ws-point-store" data-menu="point-store"><span class="pill">Balance: {{ $balanceLabel }}</span><span class="dot yellow"></span></div>
-        <div class="pill-row"><span class="pill">Deposit: {{ number_format($stats['deposit'], 2) }}</span><span class="dot blue"></span></div>
-        <div class="pill-row"><span class="pill">Profit: {{ number_format($stats['profit'], 2) }}</span><span class="dot orange"></span></div>
-        <div class="officer-label">Officer</div>
+        <div class="point-actions">
+          <div class="pill-row menu-trigger" data-ws="ws-point-store" data-menu="point-store"><span class="pill">Shopping Point: {{ number_format($stats['shopping_points']) }}</span><span class="dot pink"></span></div>
+          <div class="pill-row menu-trigger" data-ws="ws-point-store" data-menu="point-store"><span class="pill">Payout Point: {{ $balanceLabel }}</span><span class="dot yellow"></span></div>
+          <div class="pill-row"><span class="pill">Deposit: {{ number_format($stats['deposit'], 2) }}</span><span class="dot blue"></span></div>
+          <div class="pill-row"><span class="pill">Profit: {{ number_format($stats['profit'], 2) }}</span><span class="dot orange"></span></div>
+        </div>
       </div>
+      <div class="letter-row" aria-label="Officer level navigation">
+        <button class="letter-button active" type="button">A <span>▶</span></button>
+        <button class="letter-button" type="button">B <span>▶</span></button>
+        <button class="letter-button" type="button">C <span>▶</span></button>
+        <button class="letter-button" type="button">D <span>▶</span></button>
+        <button class="letter-button" type="button">E <span>▶</span></button>
+      </div>
+      <div class="officer-label">Officer</div>
     </div>
 
     <div class="nav-card">
@@ -2722,6 +2737,11 @@ $(document).ready(function() {
 
     $('.registration-level').on('click', function() {
         openOfficerWorkspace($(this).data('workspace'));
+    });
+
+    $('.letter-button').on('click', function() {
+        $('.letter-button').removeClass('active');
+        $(this).addClass('active');
     });
 
     // Dynamic Menu Toggles

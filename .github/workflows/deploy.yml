@@ -29,51 +29,20 @@ jobs:
           php-version: '8.3'
           tools: composer:v2
 
-      - name: Install PHP dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+      - name: Install production PHP dependencies
+        run: composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
-      - name: Configure SSH
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
-        run: |
-          install -m 700 -d ~/.ssh
-          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/known_hosts
-
-      - name: Synchronize application files
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-        run: |
-          rsync -az --delete \
-            --exclude='.env' \
-            --exclude='.git/' \
-            --exclude='.github/' \
-            --exclude='node_modules/' \
-            --exclude='vendor/' \
-            --exclude='storage/' \
-            --exclude='bootstrap/cache/' \
-            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes" \
-            ./ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH/"
-
-      - name: Finalize deployment
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
-          PHP_BIN: ${{ secrets.PHP_BIN || 'php' }}
-        run: |
-          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" <<EOF
-            set -e
-            cd "$DEPLOY_PATH"
-            composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
-            "$PHP_BIN" artisan migrate --force
-            "$PHP_BIN" artisan optimize:clear
-            "$PHP_BIN" artisan config:cache
-            "$PHP_BIN" artisan route:cache
-            "$PHP_BIN" artisan view:cache
-          EOF
+      - name: Deploy application files by FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PRIVATE_KEY }}
+          server-dir: ${{ secrets.DEPLOY_PATH }}/
+          exclude: |
+            **/.git*/**
+            **/.github/**
+            **/.env
+            **/node_modules/**
+            **/storage/**
+            **/bootstrap/cache/**

@@ -32,17 +32,6 @@ jobs:
       - name: Install PHP dependencies
         run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '16'
-          cache: npm
-
-      - name: Build production assets
-        run: |
-          npm ci
-          npm run production
-
       - name: Configure SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -57,7 +46,6 @@ jobs:
       - name: Synchronize application files
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
           SSH_USER: ${{ secrets.SSH_USER }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
@@ -69,22 +57,20 @@ jobs:
             --exclude='vendor/' \
             --exclude='storage/' \
             --exclude='bootstrap/cache/' \
-            -e "ssh -i ~/.ssh/id_ed25519 -p $SSH_PORT -o StrictHostKeyChecking=yes" \
+            -e "ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes" \
             ./ "$SSH_USER@$SSH_HOST:$DEPLOY_PATH/"
 
       - name: Finalize deployment
         env:
           SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_PORT: ${{ secrets.SSH_PORT || '22' }}
           SSH_USER: ${{ secrets.SSH_USER }}
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
           PHP_BIN: ${{ secrets.PHP_BIN || 'php' }}
-          COMPOSER_BIN: ${{ secrets.COMPOSER_BIN || 'composer' }}
         run: |
-          ssh -i ~/.ssh/id_ed25519 -p "$SSH_PORT" -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" <<EOF
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" <<EOF
             set -e
             cd "$DEPLOY_PATH"
-            "$COMPOSER_BIN" install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+            composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
             "$PHP_BIN" artisan migrate --force
             "$PHP_BIN" artisan optimize:clear
             "$PHP_BIN" artisan config:cache
